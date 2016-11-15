@@ -1,5 +1,20 @@
+var gulp       = require('gulp'),
+	sass       = require('gulp-sass'),
+	concat     = require('gulp-concat'),
+	prefix     = require('gulp-autoprefixer'),
+	sourcemaps = require('gulp-sourcemaps'),
+	uglify     = require('gulp-uglify'),
+	notify     = require('gulp-notify');
+	imagemin   = require('gulp-imagemin');
+	var cache  = require('gulp-cache');
+
+var browserSync = require('browser-sync').create(),
+	reload      = browserSync.reload;
+
+
 var browserSyncOptions = {
-    proxy: "localhost/blank_wp/",
+    proxy: "http://localhost:8888/html5/",
+    /* "localhost/blank_wp/" */
     notify: false
 };
 
@@ -10,16 +25,7 @@ var browserSyncWatchFiles = [
 	'./*.php'
 ];
 
-var gulp       = require('gulp'),
-	sass       = require('gulp-sass'),
-	concat     = require('gulp-concat'),
-	prefix     = require('gulp-autoprefixer'),
-	sourcemaps = require('gulp-sourcemaps'),
-	uglify     = require('gulp-uglify'),
-	notify     = require('gulp-notify');
-
-var browserSync = require('browser-sync').create(),
-	reload      = browserSync.reload;
+gulp.task('default', ['sass','scripts','browser-sync','watch']);
 
 gulp.task('sass', function() {
 	return gulp.src('styles/sass/**/*.scss')
@@ -58,4 +64,10 @@ gulp.task('watch', function() {
 	gulp.watch('js/src/**/*.js', ['scripts']);
 });
 
-gulp.task('default', ['sass','scripts','browser-sync','watch']);
+gulp.task('images', function(){
+  return gulp.src('img/**/*.+(png|jpg|gif|svg)')
+  .pipe(cache(imagemin({
+      interlaced: true
+    })))
+  .pipe(gulp.dest('dist/images'))
+});
