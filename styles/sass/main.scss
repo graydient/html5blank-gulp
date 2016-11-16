@@ -1,6 +1,8 @@
 /* Vendors */
-// @import "vendors/normalize";
+@import "vendors/normalize";
 @import "bower_components/bourbon/app/assets/stylesheets/bourbon.scss";
+@import 'bower_components/neat/app/assets/stylesheets/neat';
+
 
 @import "base/variables",
 		"base/mixins",
@@ -15,4 +17,5 @@
 		"partials/logo",
 		"partials/nav",
 		"partials/sidebar",
+		"partials/refills",
 		"partials/footer";
