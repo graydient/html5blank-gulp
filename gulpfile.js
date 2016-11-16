@@ -1,12 +1,12 @@
 var gulp       = require('gulp'),
 	sass       = require('gulp-sass'),
+	cssnano    = require('gulp-cssnano'),
 	concat     = require('gulp-concat'),
 	prefix     = require('gulp-autoprefixer'),
 	sourcemaps = require('gulp-sourcemaps'),
 	uglify     = require('gulp-uglify'),
-	notify     = require('gulp-notify');
-	imagemin   = require('gulp-imagemin');
-	var cache  = require('gulp-cache');
+	imagemin   = require('gulp-imagemin'),
+    cache      = require('gulp-cache');
 
 var browserSync = require('browser-sync').create(),
 	reload      = browserSync.reload;
@@ -37,22 +37,14 @@ gulp.task('sass', function() {
 		.pipe(prefix())
 		.pipe(sourcemaps.write())
 		.pipe(gulp.dest('styles/css'))
-		.pipe(reload({stream: true}))
-		.pipe(notify({
-			title: 'SASS Success',
-			message: 'Compressed: <%= file.relative %>'
-		}));
+		.pipe(reload({stream: true}));
 });
 
 gulp.task('scripts', function() {
 	return gulp.src('js/src/**/*.js')
 		.pipe(concat('main.min.js'))
 		.pipe(uglify())
-		.pipe(gulp.dest('js/dist'))
-		.pipe(notify({
-			title: 'JS Success',
-			message: 'Compressed: <%= file.relative %>'
-		}));
+		.pipe(gulp.dest('js/dist'));
 });
 
 gulp.task('browser-sync', function() {
